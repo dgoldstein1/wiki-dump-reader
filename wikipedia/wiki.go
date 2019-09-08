@@ -9,6 +9,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
 	"time"
 )
@@ -109,4 +110,12 @@ func AddEdgesIfDoNotExist(
 		}
 	}
 	return neighborsAdded, err
+}
+
+// taken from https://github.com/dps/go-xml-parse/blob/master/go-xml-parse.go
+func CanonicalizeTitle(title string) string {
+	can := strings.ToLower(title)
+	can = strings.Replace(can, " ", "_", -1)
+	can = url.QueryEscape(can)
+	return can
 }
