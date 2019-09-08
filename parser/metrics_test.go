@@ -34,17 +34,12 @@ func TestServeServiceMetrics(t *testing.T) {
 	// assert that has correct values
 	assert.True(t, strings.Contains(bodyAsString, "golang_nodes_added"))
 	assert.True(t, strings.Contains(bodyAsString, "golang_nodes_visited"))
-	assert.True(t, strings.Contains(bodyAsString, "golang_max_depth"))
 }
 
 func TestUpdateMetrics(t *testing.T) {
 	t.Run("increments nodesVisited", func(t *testing.T) {
 		n := totalNodesAdded.get()
-		UpdateMetrics(10, 1)
+		UpdateMetrics(10)
 		assert.Equal(t, n+10, totalNodesAdded.get())
-	})
-	t.Run("set maxDepth if it's greater than current", func(t *testing.T) {
-		UpdateMetrics(10, 1)
-		assert.Equal(t, int32(1), maxDepth.get())
 	})
 }

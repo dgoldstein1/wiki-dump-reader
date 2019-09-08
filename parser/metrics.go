@@ -25,14 +25,7 @@ var (
 			Help:      "Number of nodes succesfully visited",
 		})
 
-	maxDepthCounter = prometheus.NewCounter(
-		prometheus.CounterOpts{
-			Namespace: "golang",
-			Name:      "max_depth",
-			Help:      "Max depth in the tree visited nodes",
-		})
 	totalNodesAdded = asyncInt(0)
-	maxDepth        = asyncInt(0)
 )
 
 // resgisters and serves metrics to HTTP
@@ -41,7 +34,6 @@ func ServeMetrics() {
 	// register metrics
 	prometheus.MustRegister(nodesVisitedCounter)
 	prometheus.MustRegister(nodesAddedCounter)
-	prometheus.MustRegister(maxDepthCounter)
 	// serve http
 	go func() {
 		logErr("%v", http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("METRICS_PORT")), nil))
@@ -49,18 +41,12 @@ func ServeMetrics() {
 }
 
 // updates prometheus and internal metrics
-func UpdateMetrics(numberOfNodesAdded int, currDepth int) {
+func UpdateMetrics(numberOfNodesAdded int) {
 	// increment number of nodes crawled
 	nodesVisitedCounter.Inc()
 	// increment number of nodes
 	totalNodesAdded.incr(int32(numberOfNodesAdded))
 	nodesAddedCounter.Add(float64(numberOfNodesAdded))
-	// set max depth if greater
-
-	if int32(currDepth) > maxDepth.get() {
-		maxDepth.incr(1)
-		maxDepthCounter.Inc()
-	}
 }
 
 // increments async int by "n"
