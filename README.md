@@ -28,7 +28,6 @@ dc up -d
 or with dependencies running locally
 
 ```sh
-# run crawl on wikipedia
 export GRAPH_DB_ENDPOINT="http://localhost:5000" # endpoint of graph database
 export TWO_WAY_KV_ENDPOINT="http://localhost:5001" # endpoint of k:v <-> v:k lookup metadata db
 export PARALLELISM=20 # number of parallel threads to run

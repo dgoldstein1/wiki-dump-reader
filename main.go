@@ -43,12 +43,12 @@ func parseEnv() {
 }
 
 // runs parser with given functions
-func runParser() {
+func runParser(file string) {
 	// assert environment
 	parseEnv()
 	// parse with passed args
 	parser.ServeMetrics()
-	parser.Run()
+	parser.Run(file)
 }
 
 func main() {
@@ -63,7 +63,7 @@ func main() {
 			Aliases: []string{"w"},
 			Usage:   "wiki-dump-parser [parse] [file.xml]",
 			Action: func(c *cli.Context) error {
-				runParser()
+				runParser(c.Args().Get(0))
 				return nil
 			},
 		},

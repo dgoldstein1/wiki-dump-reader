@@ -9,4 +9,6 @@ var logErr = log.Errorf
 var logWarn = log.Warnf
 var logFatal = log.Fatalf
 
-func Run() {}
+func Run(file string) {
+	logMsg("Reading in file: %s", file)
+}
