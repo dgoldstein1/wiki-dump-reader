@@ -22,7 +22,7 @@ func Run(file string) {
 	Parse(xmlFile)
 }
 
-// main look of parser
+// main look of parser. Adopted from https://github.com/dps/go-xml-parse/blob/master/go-xml-parse.go
 func Parse(file *os.File) {
 	defer file.Close()
 	decoder := xml.NewDecoder(file)

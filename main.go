@@ -60,7 +60,7 @@ func main() {
 	app.Commands = []cli.Command{
 		{
 			Name:    "parse",
-			Aliases: []string{"w"},
+			Aliases: []string{"p"},
 			Usage:   "wiki-dump-parser [parse] [file.xml]",
 			Action: func(c *cli.Context) error {
 				runParser(c.Args().Get(0))
