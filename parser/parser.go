@@ -55,8 +55,7 @@ func HandlePage(p Page) error {
 	p.Title = wiki.CanonicalizeTitle(p.Title)
 	logMsg("Parsing %s", p.Title)
 	// find links on page
-	e, links := ParseOutLinks(p.Text)
-	logMsg("links found: %v", links)
+	e, _ := ParseOutLinks(p.Text)
 	UpdateMetrics(1)
 	return e
 }
