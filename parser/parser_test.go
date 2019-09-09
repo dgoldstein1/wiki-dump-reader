@@ -12,19 +12,19 @@ func TestParseOutLinks(t *testing.T) {
 		Name          string
 		Text          string
 		ExpectedError error
-		ExpectedLinks []string
+		NumberOfLinks int
 	}
 	testTable := []Test{
 		Test{
 			Name:          "finds correct links",
 			Text:          anarchismText,
 			ExpectedError: nil,
-			ExpectedLinks: []string{},
+			NumberOfLinks: 497,
 		},
 	}
 	for _, test := range testTable {
 		e, links := ParseOutLinks(test.Text)
 		assert.Equal(t, test.ExpectedError, e)
-		assert.Equal(t, test.ExpectedLinks, links)
+		assert.Equal(t, test.NumberOfLinks, len(links))
 	}
 }
