@@ -63,7 +63,7 @@ func HandlePage(p Page) error {
 
 // finds links within string, which look like:
 // '[[legal document]]'
-var r, _ = regexp.Compile(`\[\[([^\[\]]+)\]\]`)
+var r, _ = regexp.Compile(`\[\[([^\[\]:]+)\]\]`)
 
 func ParseOutLinks(text string) (e error, links []string) {
 	links = r.FindAllString(text, -1)
