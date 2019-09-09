@@ -2,10 +2,12 @@ package parser
 
 import (
 	"encoding/xml"
-	wiki "github.com/dgoldstein1/wiki-dump-reader/wikipedia"
+	wiki "github.com/dgoldstein1/crawler/wikipedia"
 	log "github.com/sirupsen/logrus"
+	"net/url"
 	"os"
 	"regexp"
+	"strings"
 )
 
 var logMsg = log.Infof
@@ -52,7 +54,7 @@ func Parse(file *os.File) {
 
 // handles what happens when a page tag is discovered
 func HandlePage(p Page) error {
-	p.Title = wiki.CanonicalizeTitle(p.Title)
+	p.Title = CanonicalizeTitle(p.Title)
 	logMsg("Parsing %s", p.Title)
 	// find links on page
 	err, links := ParseOutLinks(p.Text)
@@ -81,4 +83,12 @@ var r, _ = regexp.Compile(`\[\[([^\[\]:]+)\]\]`)
 func ParseOutLinks(text string) (e error, links []string) {
 	links = r.FindAllString(text, -1)
 	return e, links
+}
+
+// taken from https://github.com/dps/go-xml-parse/blob/master/go-xml-parse.go
+func CanonicalizeTitle(title string) string {
+	can := strings.ToLower(title)
+	can = strings.Replace(can, " ", "_", -1)
+	can = url.QueryEscape(can)
+	return can
 }
