@@ -23,6 +23,8 @@ func TestParseOutLinks(t *testing.T) {
 		},
 	}
 	for _, test := range testTable {
-		assert.NotNil(t, test)
+		e, links := ParseOutLinks(test.Text)
+		assert.Equal(t, test.ExpectedError, e)
+		assert.Equal(t, test.ExpectedLinks, links)
 	}
 }

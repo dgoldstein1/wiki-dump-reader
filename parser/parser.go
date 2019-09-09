@@ -2,10 +2,10 @@ package parser
 
 import (
 	"encoding/xml"
-	"fmt"
 	wiki "github.com/dgoldstein1/wiki-dump-reader/wikipedia"
 	log "github.com/sirupsen/logrus"
 	"os"
+	"regexp"
 )
 
 var logMsg = log.Infof
@@ -63,8 +63,9 @@ func HandlePage(p Page) error {
 
 // finds links within string, which look like:
 // '[[legal document]]'
+var r, _ = regexp.Compile(`\[\[([^\[\]]+)\]\]`)
+
 func ParseOutLinks(text string) (e error, links []string) {
-	fmt.Println(text)
-	fmt.Println("------------------------------------------------")
+	links = r.FindAllString(text, -1)
 	return e, links
 }
