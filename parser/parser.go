@@ -55,9 +55,23 @@ func HandlePage(p Page) error {
 	p.Title = wiki.CanonicalizeTitle(p.Title)
 	logMsg("Parsing %s", p.Title)
 	// find links on page
-	e, _ := ParseOutLinks(p.Text)
-	UpdateMetrics(1)
-	return e
+	err, links := ParseOutLinks(p.Text)
+	if err != nil {
+		logErr("Could not parse out links from node %s: %v", p.Title, err)
+		return err
+	}
+	// update DBs
+	neighborsAdded, err := wiki.AddEdgesIfDoNotExist(
+		p.Title,
+		links,
+	)
+	if err != nil {
+		logErr("Could not add edges to graph for node %s: %v", p.Title, err)
+		return err
+	}
+	// succesfully processed
+	UpdateMetrics(len(neighborsAdded))
+	return err
 }
 
 // finds links within string, which look like:
