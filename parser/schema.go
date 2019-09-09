@@ -11,7 +11,6 @@ type Redirect struct {
 }
 
 type Page struct {
-	Title string   `xml:"title"`
-	Redir Redirect `xml:"redirect"`
-	Text  string   `xml:"revision>text"`
+	Title string `xml:"title"`
+	Text  string `xml:"revision>text"`
 }

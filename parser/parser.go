@@ -41,11 +41,8 @@ func Parse(file *os.File) {
 			// ...and its name is "page"
 			if inElement == "page" {
 				var p Page
-				// decode a whole chunk of following XML into the
-				// variable p which is a Page (se above)
 				decoder.DecodeElement(&p, &se)
 				HandlePage(p)
-
 			}
 		default:
 		}
@@ -54,9 +51,18 @@ func Parse(file *os.File) {
 
 // handles what happens when a page tag is discovered
 func HandlePage(p Page) error {
-	logMsg("Parsing %s", p.Title)
-	// Do some stuff with the page.
 	p.Title = wiki.CanonicalizeTitle(p.Title)
+	logMsg("Parsing %s", p.Title)
+	// find links on page
+	e, links := ParseOutLinks(p.Text)
+	logMsg("links found: %v", links)
 	UpdateMetrics(1)
-	return nil
+	return e
+}
+
+// finds links within string, which look like:
+// '[[legal document]]'
+func ParseOutLinks(text string) (e error, links []string) {
+
+	return e, links
 }

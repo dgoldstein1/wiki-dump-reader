@@ -1,6 +1,6 @@
 # wiki-dump-parser
 
-Parses [wiki-dump xml files](https://dumps.wikimedia.org/enwiki/) and adds them to [big-data graph DB](https://github.com/dgoldstein1/graphApi).
+Parses [wiki-dump xml files](https://dumps.wikimedia.org/enwiki/) and indexes nodes as a directed graph to [big-data graph DB](https://github.com/dgoldstein1/graphApi).
 
 [![Maintainability]()]()
 [![Test Coverage]()]()
