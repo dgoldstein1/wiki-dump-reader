@@ -1,0 +1,2 @@
+from grafana/grafana:6.2.4
+copy ./provisioning /etc/grafana/provisioning
