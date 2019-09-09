@@ -1,4 +1,4 @@
-package parser
+package main
 
 var anarchismText = `
 {{redirect2|Anarchist|Anarchists|other uses|Anarchists (disambiguation)}}

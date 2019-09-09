@@ -1,19 +1,13 @@
-package parser
+package main
 
 import (
 	"encoding/xml"
 	wiki "github.com/dgoldstein1/crawler/wikipedia"
-	log "github.com/sirupsen/logrus"
 	"net/url"
 	"os"
 	"regexp"
 	"strings"
 )
-
-var logMsg = log.Infof
-var logErr = log.Errorf
-var logWarn = log.Warnf
-var logFatal = log.Fatalf
 
 func Run(file string) {
 	logMsg("Reading in file: %s", file)

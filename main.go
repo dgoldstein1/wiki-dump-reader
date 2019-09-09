@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/dgoldstein1/wiki-dump-reader/parser"
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 	"os"
@@ -11,6 +10,8 @@ import (
 // checks environment for required env vars
 var logFatalf = log.Fatalf
 var logMsg = log.Infof
+var logErr = log.Errorf
+var logWarn = log.Warnf
 
 func parseEnv() {
 	log.SetFormatter(&log.TextFormatter{
@@ -47,8 +48,8 @@ func runParser(file string) {
 	// assert environment
 	parseEnv()
 	// parse with passed args
-	parser.ServeMetrics()
-	parser.Run(file)
+	ServeMetrics()
+	Run(file)
 }
 
 func main() {

@@ -1,4 +1,4 @@
-package parser
+package main
 
 // checks if is valid wiki link
 type IsValidWikiLink func(string) bool
