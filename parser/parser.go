@@ -44,14 +44,19 @@ func Parse(file *os.File) {
 				// decode a whole chunk of following XML into the
 				// variable p which is a Page (se above)
 				decoder.DecodeElement(&p, &se)
+				HandlePage(p)
 
-				// Do some stuff with the page.
-				p.Title = wiki.CanonicalizeTitle(p.Title)
-				logMsg("Parsing %s", p.Title)
 			}
 		default:
 		}
-
 	}
+}
 
+// handles what happens when a page tag is discovered
+func HandlePage(p Page) error {
+	logMsg("Parsing %s", p.Title)
+	// Do some stuff with the page.
+	p.Title = wiki.CanonicalizeTitle(p.Title)
+	UpdateMetrics(1)
+	return nil
 }
