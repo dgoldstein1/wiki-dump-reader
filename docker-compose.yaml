@@ -1,36 +1,53 @@
 version: "3.7"
 services:
 
-  ##############
-  ## Crawlers ##
-  ##############
-
-  crawler:
-    image: dgoldstein1/crawler:latest
-    depends_on:
-      - kv
-      - graph
-    environment:
-      - GRAPH_DB_ENDPOINT=http://graph:5000
-      - TWO_WAY_KV_ENDPOINT=http://kv:5001
-      - MAX_APPROX_NODES=10
-      - COMMAND=wikipedia
-      - METRICS_PORT=8001
-      - PARALLELISM=16
-      - MS_DELAY=5
-
+ 
 
   ##############
   ## Services ##
   ##############
 
   kv:
-    image: dgoldstein1/twowaykv:latest
+    image: dgoldstein1/twowaykv:0.2.2
     ports:
       - 5001:5001
+    depends_on:
+      - prom
+    environment:
+      - GRAPH_DB_STORE_DIR=/tmp/twowaykv
+    volumes:
+      - ./out/twowaykv:/tmp/twowaykv
 
   graph:
-    image: dgoldstein1/biggraph:latest
+    image: dgoldstein1/biggraph:0.1.4
     ports:
       - 5000:5000
       - 8001:8001
+    depends_on:
+      - prom
+    environment:
+      - GRAPH_SAVE_PATH=/data/wikipedia_graph.graph
+      - GRAPH_SAVE_INTERVAL=60
+    volumes:
+      - ./out/biggraph/:/data/
+
+  ################
+  ## Monitoring ##
+  ################
+
+  prom:
+    image: prom/prometheus:v2.11.1
+    ports:
+      - 9090:9090
+    entrypoint: "/bin/prometheus --log.level=debug --config.file=/etc/prometheus/prometheus.yml"
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana:6.2.4
+    volumes:
+      - ./docker/grafana/provisioning/:/etc/grafana/provisioning/
+    depends_on:
+      - prom
+    ports:
+    - "3000:3000"
