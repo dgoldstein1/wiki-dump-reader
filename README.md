@@ -53,9 +53,10 @@ go test $(go list ./... | grep -v /vendor/)
 
 #### Benchmarks
 
-| Dump Size | Execution Time | Number of Nodes | Number of Edges | Nodes Added / Sec |
-|-----------|----------------|-----------------|-----------------|-------------------|
-| 619mb     | 4m52.936s      | 1280817         | 2648926         | 4386.35           |
+| Dump Size                    | Execution Time | Number of Nodes | Number of Edges | Nodes Added / Sec |
+|------------------------------|----------------|-----------------|-----------------|-------------------|
+| 619mb                        | 4m52.936s      | 1280817         | 2648926         | 4386.35           |
+| 27gb (half of wikipedia)     | 1490m53.328s   | 29559863        | 124179160       | 330.45            |
 
 
 ## Authors
