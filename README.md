@@ -1,6 +1,6 @@
 # wiki-dump-parser
 
-Parses [wiki-dump xml files](https://dumps.wikimedia.org/enwiki/) and adds them to [big-data graph DB](https://github.com/dgoldstein1/graphApi).
+Parses [wiki-dump xml files](https://dumps.wikimedia.org/enwiki/) and indexes nodes as a directed graph to [big-data graph DB](https://github.com/dgoldstein1/graphApi).
 
 [![Maintainability]()]()
 [![Test Coverage]()]()
@@ -53,7 +53,10 @@ go test $(go list ./... | grep -v /vendor/)
 
 #### Benchmarks
 
-TODO:
+| Dump Size                    | Execution Time | Number of Nodes | Number of Edges | Nodes Added / Sec |
+|------------------------------|----------------|-----------------|-----------------|-------------------|
+| 619mb                        | 4m52.936s      | 1280817         | 2648926         | 4386.35           |
+| 27gb (half of wikipedia)     | 1490m53.328s   | 29559863        | 124179160       | 330.45            |
 
 
 ## Authors
